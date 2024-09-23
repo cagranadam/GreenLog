@@ -15,67 +15,6 @@
       event.preventDefault(); // Prevent the form from submitting
       document.getElementById("deliveryOptions").style.display = "block"; // Show the delivery options
     }
-
-    // Function to validate mandatory fields
-    function validateForm() {
-      const firstName = document.getElementById("firstName").value;
-      const surname = document.getElementById("surname").value;
-      const email = document.getElementById("email").value;
-
-      // Check if required fields are filled
-      if (!firstName || !surname || !email) {
-        alert("Please fill in all mandatory fields: First name, Surname, and E-mail address.");
-        return false; // Prevent form submission
-      }
-
-      return true; // Allow form submission
-    }
-
-    // Function to send the form data to Google Apps Script
-    function sendFormData(event) {
-      event.preventDefault(); // Prevent the default form submission
-
-      // Perform validation first
-      if (!validateForm()) {
-        return; // Stop execution if validation fails
-      }
-
-     
-      // Gather form data
-      const firstName = document.getElementById("firstName").value;
-      const surname = document.getElementById("surname").value;
-      const email = document.getElementById("email").value;
-      const deliveryAddress = document.getElementById("deliveryAddress").value;
-      const orderNumber = document.getElementById("orderNumber").value;
-      const deliveryDate = document.getElementById("deliveryDate").value;
-
-      // Create an object of the form data
-      const formData = {
-        firstName,
-        surname,
-        email,
-        deliveryAddress,
-        orderNumber,
-        deliveryDate
-      };
-
-      // Send the form data to the Google Apps Script
-      fetch('AKfycbwhtJ9VWVZyPebhGzD-kj_kSelZRmuonvjmxMgwJDY', {  // Replace with your Web App URL
-        method: 'POST',
-        body: JSON.stringify(formData),
-        headers: { 'Content-Type': 'application/json' }
-      })
-      .then(response => response.text())
-      .then(data => {
-        console.log('Success:', data);
-        alert("Form submitted successfully!");
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-        alert("Error submitting form.");
-      });
-    }
-
   </script>
 </head>
 
@@ -92,59 +31,64 @@
 ================================-->
 
 <section class="hero-area bg-1 text-center overly">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="content-block">
-          <h1>FREE No-Rush Shipping</h1>
-          <h4>Don't need it urgently? Earn a digital reward</h4>
-          <p>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</p>
-        </div>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<!-- Header Contetnt -->
+				<div class="content-block">
+					<h1>FREE No-Rush Shipping</h1>
+                                        <h4>Don't need it urgently? Earn a digital reward</h4>
+					<p>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</p>
+				</div>
+				<!-- personal information -->
+				<div class="advance-search">
+					<div class="container">
+						<div class="row justify-content-center">
+							<div class="col-lg-12 col-md-12 align-content-center">
+								<form>
+									<div class="form-row">
+										<div class="form-group col-xl-4 col-lg-3 col-md-6">
+                                                                                        <label for="inputtext4" style="display: block; text-align: left;">First name</label>
+											<input type="text" class="form-control my-2 my-lg-1" id="inputtext4">
+										</div>
+<div class="form-group col-xl-4 col-lg-3 col-md-6">
+                                                                                        <label for="inputtext4" style="display: block; text-align: left;">Surname</label>
+											<input type="text" class="form-control my-2 my-lg-1" id="inputtext4">
+										</div>
+										<div class="form-group col-xl-4 col-lg-3 col-md-6">
+                                                                                        <label for="inputtext4" style="display: block; text-align: left;">E-mail address</label>
+											<input type="text" class="form-control my-2 my-lg-1" id="inputtext4">
+										</div>
+										<div class="form-group col-xl-4 col-lg-3 col-md-6">
+                                                                                        <label for="inputtext4" style="display: block; text-align: left;">Delivery address</label>
+											<input type="text" class="form-control my-2 my-lg-1" id="inputtext4">
+										</div>
+										<div class="form-group col-xl-4 col-lg-3 col-md-6">
+                                                                                        <label for="inputtext4" style="display: block; text-align: left;">Order number</label>
+											<input type="text" class="form-control my-2 my-lg-1" id="inputtext4">
+										</div>
 
-        <div class="advance-search">
-          <div class="container">
-            <div class="row justify-content-center">
-              <div class="col-lg-12 col-md-12 align-content-center">
-                <form>
-                  <div class="form-row">
-                    <div class="form-group col-xl-4 col-lg-3 col-md-6">
-                      <label for="firstName" style="display: block; text-align: left;">First name</label>
-                      <input type="text" class="form-control my-2 my-lg-1" id="firstName">
-                    </div>
-                    <div class="form-group col-xl-4 col-lg-3 col-md-6">
-                      <label for="surname" style="display: block; text-align: left;">Surname</label>
-                      <input type="text" class="form-control my-2 my-lg-1" id="surname">
-                    </div>
-                    <div class="form-group col-xl-4 col-lg-3 col-md-6">
-                      <label for="email" style="display: block; text-align: left;">E-mail address</label>
-                      <input type="email" class="form-control my-2 my-lg-1" id="email">
-                    </div>
-                    <div class="form-group col-xl-4 col-lg-3 col-md-6">
-                      <label for="deliveryAddress" style="display: block; text-align: left;">Delivery address</label>
-                      <input type="text" class="form-control my-2 my-lg-1" id="deliveryAddress">
-                    </div>
-                    <div class="form-group col-xl-4 col-lg-3 col-md-6">
-                      <label for="orderNumber" style="display: block; text-align: left;">Order number</label>
-                      <input type="text" class="form-control my-2 my-lg-1" id="orderNumber">
-                    </div>
-                    <div class="form-group col-xl-4 col-lg-3 col-md-6">
-                      <label for="deliveryDate" style="display: block; text-align: left;">Expected delivery date</label>
-                      <input type="date" class="form-control my-2 my-lg-1" id="deliveryDate">
-                    </div>
+										<div class="form-group col-xl-4 col-lg-3 col-md-6">
+                                                                                        <label for="inputtext4" style="display: block; text-align: left;">Expected delivery date</label>
+											<input type="date" class="form-control my-2 my-lg-1" id="inputtext4">
+										</div>
 
+										<!-- Updated Button to trigger JavaScript function -->
                     <div class="form-group col-12 d-flex justify-content-center mt-3">
-                      <button type="button" class="btn btn-success" style="width: 200px;" onclick="sendFormData(event)">Get delivery options</button>
+                      <button type="button" class="btn btn-success" style="width: 200px;" onclick="showDeliveryOptions(event)">Get delivery options</button>
                     </div>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Container End -->
 </section>
+
 
 <!--===========================================
 =              Options section                =
