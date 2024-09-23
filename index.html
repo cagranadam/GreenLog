@@ -16,10 +16,31 @@
       document.getElementById("deliveryOptions").style.display = "block"; // Show the delivery options
     }
 
+    // Function to validate mandatory fields
+    function validateForm() {
+      const firstName = document.getElementById("firstName").value;
+      const surname = document.getElementById("surname").value;
+      const email = document.getElementById("email").value;
+
+      // Check if required fields are filled
+      if (!firstName || !surname || !email) {
+        alert("Please fill in all mandatory fields: First name, Surname, and E-mail address.");
+        return false; // Prevent form submission
+      }
+
+      return true; // Allow form submission
+    }
+
     // Function to send the form data to Google Apps Script
     function sendFormData(event) {
       event.preventDefault(); // Prevent the default form submission
-      
+
+      // Perform validation first
+      if (!validateForm()) {
+        return; // Stop execution if validation fails
+      }
+
+     
       // Gather form data
       const firstName = document.getElementById("firstName").value;
       const surname = document.getElementById("surname").value;
@@ -39,7 +60,7 @@
       };
 
       // Send the form data to the Google Apps Script
-      fetch('YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL', {  // Replace with your Web App URL
+      fetch('AKfycbwhtJ9VWVZyPebhGzD-kj_kSelZRmuonvjmxMgwJDY', {  // Replace with your Web App URL
         method: 'POST',
         body: JSON.stringify(formData),
         headers: { 'Content-Type': 'application/json' }
