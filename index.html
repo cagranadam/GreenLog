@@ -9,6 +9,24 @@
   <link href="css/bootstrap-slider.css" rel="stylesheet">
   <link href="css/style.css" rel="stylesheet">
   <script>
+
+    // JavaScript function to validate login and show personal information
+    function validateLogin(event) {
+      event.preventDefault(); // Prevent the form from submitting
+      // Get email and password values
+      var email = document.getElementById("email").value;
+      var password = document.getElementById("password").value;
+
+      // Simple validation for email and password
+      if (email === "" || password === "") {
+        alert("Please enter both email and password.");
+      } else {
+        // Hide login page and show personal information
+        document.getElementById("loginPage").style.display = "none";
+        document.getElementById("personalInformation").style.display = "block";
+      }
+    }
+    
     // JavaScript function to show the delivery options
     function showDeliveryOptions(event) {
       event.preventDefault(); // Prevent the form from submitting
@@ -18,14 +36,41 @@
 </head>
   
 
-<header>
-  <img src="images/GreenlogLogo.png" alt="" height="90">
+<header style="display: flex; justify-content: center; align-items: center;">
+  <img src="images/GreenlogLogo.png" alt="" height="100">
 </header>
 
 <!--===============================
+=            Login Page           =
+================================-->
+
+<section id="loginPage" class="login py-5 border-top-1">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-5 col-md-8 align-item-center">
+        <div class="border">
+          <h3 class="bg-gray p-4">Login Now</h3>
+          <form action="#">
+            <fieldset class="p-4">
+              <label for="inputtext4" style="display: block; text-align: left;">Email</label>
+              <input id="email" class="form-control mb-3" type="text" placeholder="Enter your email address" required>
+              <label for="inputtext4" style="display: block; text-align: left;">Password</label> 
+              <input id="password" class="form-control mb-3" type="password" placeholder="Enter your password" required>
+              <div style="text-align: center;">
+              <button type="submit" class="btn btn-success" style="width: 200px;" onclick="validateLogin(event)">Log in</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+  
+<!--===============================
 =      Personal information       =
 ================================-->
-<section class="hero-area bg-1 text-center overly">
+<section id="personalInformation" class="hero-area bg-1 text-center overly">
   <div class="container">
     <div class="row">
       <div class="col-md-12">
@@ -43,21 +88,19 @@
                 <form>
                   <div class="form-row">
                     <div class="form-group col-xl-4 col-lg-3 col-md-6">
-                      <label for="inputtext4" style="display: block; text-align: left;">First name</label>
-                      <input type="text" class="form-control my-2 my-lg-1" id="inputtext4">
-                    </div>
-                    <div class="form-group col-xl-4 col-lg-3 col-md-6">
-                      <label for="inputtext4" style="display: block; text-align: left;">Surname</label>
-                      <input type="text" class="form-control my-2 my-lg-1" id="inputtext4">
-                    </div>
-                    <div class="form-group col-xl-4 col-lg-3 col-md-6">
                       <label for="inputtext4" style="display: block; text-align: left;">E-mail address</label>
-                      <input type="text" class="form-control my-2 my-lg-1" id="inputtext4">
+                      <input type="text" class="form-control my-2 my-lg-1" id="inputtext4"  value="greenlog@xx.com" readonly>
                     </div>
                     <div class="form-group col-xl-4 col-lg-3 col-md-6">
                       <label for="inputtext4" style="display: block; text-align: left;">Delivery address</label>
-                      <input type="text" class="form-control my-2 my-lg-1" id="inputtext4">
+                      <select class="form-control my-2 my-lg-1" id="addressSelect">
+                          <option value="home">Home address</option>
+                          <option value="work">Work address</option>
+                      </select>
                     </div>
+                    </div>
+                  
+                  <div class="form-row">
                     <div class="form-group col-xl-4 col-lg-3 col-md-6">
                       <label for="inputtext4" style="display: block; text-align: left;">Order number</label>
                       <input type="text" class="form-control my-2 my-lg-1" id="inputtext4">
@@ -83,7 +126,6 @@
   </div>
   <!-- Container End -->
 </section>
-
 
 <!--===========================================
 =              Options section                =
