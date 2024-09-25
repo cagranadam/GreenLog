@@ -32,6 +32,14 @@
       event.preventDefault(); // Prevent the form from submitting
       document.getElementById("deliveryOptions").style.display = "block"; // Show the delivery options
     }
+
+    // only one checkbox is selected
+    function singleCheck(checkbox) {
+      var checkboxes = document.querySelectorAll('.form-check-input');
+      checkboxes.forEach((item) => {
+        if (item !== checkbox) item.checked = false;
+      });
+    }
   </script>
 </head>
   
@@ -151,7 +159,7 @@
           </ul>
           <div class="form-check">
 	          <label class="form-check-label">
-	            <input class="form-check-input" type="checkbox" value="">Select
+	            <input class="form-check-input" type="checkbox" value="option1" onclick="singleCheck(this)">Select
 	          </label>
 	        </div>
         </div>
@@ -169,7 +177,7 @@
           </ul>
           <div class="form-check">
 	          <label class="form-check-label">
-	            <input class="form-check-input" type="checkbox" value="">Select
+	            <input class="form-check-input" type="checkbox" value="option2" onclick="singleCheck(this)">Select
 	          </label>
 	        </div>
         </div>
@@ -187,7 +195,7 @@
           </ul>
           <div class="form-check">
 	          <label class="form-check-label">
-	            <input class="form-check-input" type="checkbox" value="">Select
+	            <input class="form-check-input" type="checkbox" value="option3" onclick="singleCheck(this)">Select
 	          </label>
 	        </div>
         </div>
