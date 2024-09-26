@@ -40,6 +40,45 @@
         if (item !== checkbox) item.checked = false;
       });
     }
+
+    // JavaScript function to send the data to Google Sheets
+    function submitOrder(event) {
+      event.preventDefault(); // Prevent the form from submitting
+
+      // Get form data
+      const email = document.getElementById('email').value; // User's email
+      const deliveryAddress = document.getElementById('addressSelect').value; // Selected delivery address
+      const orderNumber = document.getElementById('orderForm').elements[2].value; // Order number (assuming it's 3rd element)
+      const expectedDelivery = document.getElementById('orderForm').elements[3].value; // Expected delivery date
+      const chosenOption = document.querySelector('input[name="option"]:checked').value; // Selected delivery option
+
+      // Create data object to send to Google Sheets
+      const formData = {
+        email: email,
+        deliveryAddress: deliveryAddress,
+        orderNumber: orderNumber,
+        expectedDelivery: expectedDelivery,
+        chosenOption: chosenOption
+      };
+
+      // Send data using fetch to the Google Apps Script URL
+      fetch('https://script.google.com/macros/s/YOUR-SCRIPT-ID/exec', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+      .then(response => response.text())
+      .then(data => {
+        alert('Order submitted successfully!');
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+    }
+
   </script>
 
 
