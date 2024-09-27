@@ -10,22 +10,52 @@
   <link href="css/style.css" rel="stylesheet">
   <script>
 
-    // JavaScript function to validate login and show personal information
-    function validateLogin(event) {
-      event.preventDefault(); // Prevent the form from submitting
-      // Get email and password values
-      var email = document.getElementById("email").value;
-      var password = document.getElementById("password").value;
+    document.addEventListener("DOMContentLoaded", function() {
+        const loginForm = document.getElementById('loginForm');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const personalInfoSection = document.getElementById('personalInformation');
+        const loginSection = document.getElementById('loginPage');
+        const personalEmailDisplay = document.getElementById('personalEmail');
 
-      // Simple validation for email and password
-      if (email === "" || password === "") {
-        alert("Please enter both email and password.");
-      } else {
-        // Hide login page and show personal information
-        document.getElementById("loginPage").style.display = "none";
-        document.getElementById("personalInformation").style.display = "block";
-      }
-    }
+        loginForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const email = emailInput.value.trim();
+            const password = passwordInput.value.trim();
+            console.log("Attempting to fetch CSV");
+            fetch('css/list1.csv') // 确保这里的路径正确指向你的CSV文件
+                .then(response => {
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    return response.text();
+                })
+                .then(text => {
+                    console.log("CSV Loaded", text);
+                    var validLogin = false;
+                    var rows = text.split("\n");  // 按行分割CSV
+                    rows.forEach(row => {
+                        var [csvEmail, csvPassword] = row.split(";");  // 使用分号分割
+                        console.log(`Checking ${csvEmail.trim()} against ${email} and ${csvPassword.trim()} against ${password}`);
+                        if (csvEmail.trim() === email && csvPassword.trim() === password) {
+                            validLogin = true;
+                        }
+                    });
+                    if (validLogin) {
+                        console.log("Valid login credentials");
+                        loginSection.style.display = 'none';
+                        personalInfoSection.style.display = 'block';
+                        personalEmailDisplay.textContent = email;  // 更新个人信息页面的邮箱显示
+                    } else {
+                        console.log("Invalid login credentials");
+                        alert("Please enter correct email and password.");
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading the CSV file:', error);
+                    alert("Failed to load user data.");
+                });
+        });
+    });
+
     
     // JavaScript function to show the delivery options
     function showDeliveryOptions(event) {
@@ -101,12 +131,12 @@
           <h3 class="bg-gray p-4">Login Now</h3>
           <form id="loginForm">
             <fieldset class="p-4">
-              <label for="inputtext4" style="display: block; text-align: left;">Email</label>
+              <label for="email" style="display: block; text-align: left;">Email</label>
               <input id="email" class="form-control mb-3" type="text" placeholder="Enter your email address" required>
-              <label for="inputtext4" style="display: block; text-align: left;">Password</label> 
+              <label for="password" style="display: block; text-align: left;">Password</label> 
               <input id="password" class="form-control mb-3" type="password" placeholder="Enter your password" required>
               <div style="text-align: center;">
-              <button type="submit" class="btn btn-success" style="width: 200px;" onclick="validateLogin(event)">Log in</button>
+              <button type="submit" class="btn btn-success" style="width: 200px;">Log in</button>
               </div>
             </fieldset>
           </form>
@@ -138,7 +168,7 @@
                   <div class="form-row">
                     <div class="form-group col-xl-6 col-lg-6 col-md-6">
                       <label for="inputtext4" style="display: block; text-align: left;">E-mail address</label>
-                      <input type="text" class="form-control my-2 my-lg-1" id="inputtext4"  value="greenlog@xx.com" readonly>
+                      <input type="text" class="form-control my-2 my-lg-1" id="personalEmail" readonly>
                     </div>
                     <div class="form-group col-xl-6 col-lg-6 col-md-6">
                       <label for="inputtext4" style="display: block; text-align: left;">Delivery address</label>
