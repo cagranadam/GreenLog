@@ -23,7 +23,7 @@
             const email = emailInput.value.trim();
             const password = passwordInput.value.trim();
             console.log("Attempting to fetch CSV");
-            fetch('css/list1.csv') // 确保这里的路径正确指向你的CSV文件
+            fetch('css/list1.csv')
                 .then(response => {
                     if (!response.ok) throw new Error('Network response was not ok');
                     return response.text();
@@ -31,9 +31,9 @@
                 .then(text => {
                     console.log("CSV Loaded", text);
                     var validLogin = false;
-                    var rows = text.split("\n");  // 按行分割CSV
+                    var rows = text.split("\n");
                     rows.forEach(row => {
-                        var [csvEmail, csvPassword] = row.split(";");  // 使用分号分割
+                        var [csvEmail, csvPassword] = row.split(";"); 
                         console.log(`Checking ${csvEmail.trim()} against ${email} and ${csvPassword.trim()} against ${password}`);
                         if (csvEmail.trim() === email && csvPassword.trim() === password) {
                             validLogin = true;
@@ -43,7 +43,7 @@
                         console.log("Valid login credentials");
                         loginSection.style.display = 'none';
                         personalInfoSection.style.display = 'block';
-                        personalEmailDisplay.textContent = email;  // 更新个人信息页面的邮箱显示
+                        personalEmailDisplay.textContent = email; 
                     } else {
                         console.log("Invalid login credentials");
                         alert("Please enter correct email and password.");
