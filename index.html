@@ -10,51 +10,29 @@
   <link href="css/style.css" rel="stylesheet">
   <script>
 
-    document.addEventListener("DOMContentLoaded", function() {
-        const loginForm = document.getElementById('loginForm');
-        const emailInput = document.getElementById('email');
-        const passwordInput = document.getElementById('password');
-        const personalInfoSection = document.getElementById('personalInformation');
-        const loginSection = document.getElementById('loginPage');
-        const personalEmailDisplay = document.getElementById('personalEmail');
+    // Simulating user database as an array of objects
+    var users = [
+      {email: "user1@example.com", password: "password1"},
+      {email: "user2@example.com", password: "password2"}
+    ];
 
-        loginForm.addEventListener('submit', function(event) {
-            event.preventDefault();
-            const email = emailInput.value.trim();
-            const password = passwordInput.value.trim();
-            console.log("Attempting to fetch CSV");
-            fetch('css/list1.csv')
-                .then(response => {
-                    if (!response.ok) throw new Error('Network response was not ok');
-                    return response.text();
-                })
-                .then(text => {
-                    console.log("CSV Loaded", text);
-                    var validLogin = false;
-                    var rows = text.split("\n");
-                    rows.forEach(row => {
-                        var [csvEmail, csvPassword] = row.split(";"); 
-                        console.log(`Checking ${csvEmail.trim()} against ${email} and ${csvPassword.trim()} against ${password}`);
-                        if (csvEmail.trim() === email && csvPassword.trim() === password) {
-                            validLogin = true;
-                        }
-                    });
-                    if (validLogin) {
-                        console.log("Valid login credentials");
-                        loginSection.style.display = 'none';
-                        personalInfoSection.style.display = 'block';
-                        personalEmailDisplay.textContent = email; 
-                    } else {
-                        console.log("Invalid login credentials");
-                        alert("Please enter correct email and password.");
-                    }
-                })
-                .catch(error => {
-                    console.error('Error loading the CSV file:', error);
-                    alert("Failed to load user data.");
-                });
-        });
-    });
+    function validateLogin(event) {
+      event.preventDefault(); // Prevent form submission
+      var email = document.getElementById("email").value;
+      var password = document.getElementById("password").value;
+
+      // Check user credentials
+      var validUser = users.find(user => user.email === email && user.password === password);
+      if (validUser) {
+        // Correct credentials, hide login and show personal information
+        document.getElementById("loginPage").style.display = "none";
+        document.getElementById("personalInformation").style.display = "block";
+        document.getElementById("inputtext4").value = email; // Set email on personal info page
+      } else {
+        // Incorrect credentials
+        alert("Please enter correct email and password.");
+      }
+    }
 
     
     // JavaScript function to show the delivery options
@@ -131,12 +109,12 @@
           <h3 class="bg-gray p-4">Login Now</h3>
           <form id="loginForm">
             <fieldset class="p-4">
-              <label for="email" style="display: block; text-align: left;">Email</label>
+              <label for="inputtext4" style="display: block; text-align: left;">Email</label>
               <input id="email" class="form-control mb-3" type="text" placeholder="Enter your email address" required>
-              <label for="password" style="display: block; text-align: left;">Password</label> 
+              <label for="inputtext4" style="display: block; text-align: left;">Password</label> 
               <input id="password" class="form-control mb-3" type="password" placeholder="Enter your password" required>
               <div style="text-align: center;">
-              <button type="submit" class="btn btn-success" style="width: 200px;">Log in</button>
+              <button type="submit" class="btn btn-success" style="width: 200px;" onclick="validateLogin(event)">Log in</button>
               </div>
             </fieldset>
           </form>
@@ -168,7 +146,7 @@
                   <div class="form-row">
                     <div class="form-group col-xl-6 col-lg-6 col-md-6">
                       <label for="inputtext4" style="display: block; text-align: left;">E-mail address</label>
-                      <input type="text" class="form-control my-2 my-lg-1" id="personalEmail" readonly>
+                      <input type="text" class="form-control my-2 my-lg-1" id="inputtext4" readonly>
                     </div>
                     <div class="form-group col-xl-6 col-lg-6 col-md-6">
                       <label for="inputtext4" style="display: block; text-align: left;">Delivery address</label>
