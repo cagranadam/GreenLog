@@ -1,0 +1,59 @@
+<!DOCTYPE html> 
+<html lang="en">
+
+<head>
+  <title>Login Page</title>
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/bootstrap-slider.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+</head>
+
+<header style="display: flex; justify-content: center; align-items: center;">
+  <img src="GreenlogLogo.png" alt="" height="100">
+</header>
+
+<!--===============================
+=            Login Page           =
+================================-->
+<body>
+   <section id="loginPage" class="login py-5 border-top-1">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-5 col-md-8 align-item-center">
+          <div class="border">
+            <h3 class="bg-gray p-4">Login Now</h3>
+            
+            <!-- Form submits to Flask backend -->
+            <form id="loginForm" action="/login" method="POST">
+              <fieldset class="p-4">
+                <!-- Email field -->
+                <label for="email" style="display: block; text-align: left;">Email</label>
+                <input id="email" name="email" class="form-control mb-3" type="email" placeholder="Enter your email address" required>
+                
+                <!-- Password field -->
+                <label for="password" style="display: block; text-align: left;">Password</label> 
+                <input id="password" name="password" class="form-control mb-3" type="password" placeholder="Enter your password" required>
+                
+                <!-- Submit button -->
+                <div style="text-align: center;">
+                  <button type="submit" class="btn btn-success" style="width: 200px;">Log in</button>
+                </div>
+              </fieldset>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+
+<!-- Footer-->
+<footer class="footer-bottom">
+  <div class="container">
+    <div class="row">
+      <p>Designed & Developed by xxxx</p>
+    </div>
+  </div>
+</footer>
+
+</html>
