@@ -1,0 +1,109 @@
+<!DOCTYPE html> 
+<html lang="en">
+
+<head>
+  <title>Personal Information</title>
+  <!-- 
+  Essential stylesheets
+  =====================================-->
+  <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/bootstrap-slider.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+  <script>
+    // JavaScript function to show the delivery options
+    function showDeliveryOptions(event) {
+      event.preventDefault(); // Prevent the form from submitting
+      document.getElementById("deliveryOptions").style.display = "block"; // Show the delivery options
+    }
+
+    // only one checkbox is selected
+    function singleCheck(checkbox) {
+      var checkboxes = document.querySelectorAll('.form-check-input');
+      checkboxes.forEach((item) => {
+        if (item !== checkbox) item.checked = false;
+      });
+    }
+
+    // JavaScript function to send the data to Google Sheets
+    function submitOrder(event) {
+      event.preventDefault(); // Prevent the form from submitting
+
+      // Get form data
+      const email = document.getElementById('emailDisplay').value; // User's email
+      const deliveryAddress = document.getElementById('addressSelect').value; // Selected delivery address
+      const orderNumber = document.getElementById('orderForm').elements[2].value; // Order number (assuming it's 3rd element)
+      const expectedDelivery = document.getElementById('orderForm').elements[3].value; // Expected delivery date
+      const chosenOption = document.querySelector('input[name="option"]:checked').value; // Selected delivery option
+
+      // Create data object to send to Google Sheets
+      const formData = {
+        email: email,
+        deliveryAddress: deliveryAddress,
+        orderNumber: orderNumber,
+        expectedDelivery: expectedDelivery,
+        chosenOption: chosenOption
+      };
+
+      // Send data using fetch to the Google Apps Script URL
+      fetch('https://script.google.com/macros/s/AKfycbwhtJ9VWVZyPebhGzD-kj_kSelZRmuonvjmxMgwJDY/exec', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+      .then(response => response.text())
+      .then(data => {
+        alert('Order submitted successfully!');
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+    }
+
+  </script>
+</head>
+
+<body>
+    <header style="display: flex; justify-content: center; align-items: center;">
+        <img src="images/GreenlogLogo.png" alt="" height="100">
+    </header>
+
+    <!-- Personal information -->
+    <section id="personalInformation" class="hero-area bg-1 text-center overly">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="content-block">
+              <h1>FREE No-Rush Shipping</h1>
+              <h4>Don't need it urgently? Earn a digital reward</h4>
+              <p>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</p>
+            </div>
+            <div class="advance-search">
+              <form id="orderForm">
+                <div class="form-row">
+                  <div class="form-group col-xl-6 col-lg-6 col-md-6">
+                    <label for="emailDisplay" style="display: block; text-align: left;">E-mail address</label>
+                    <input type="text" class="form-control my-2 my-lg-1" id="emailDisplay" value="{{ email }}" readonly>
+                  </div>
+                  <!-- Rest of the form remains unchanged -->
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+</body>
+
+<!-- Footer-->
+<footer class="footer-bottom">
+  <div class="container">
+    <div class="row">
+      <p>Designed & Developed by xxxx</p>
+    </div>
+  </div>
+</footer>
+
+</html>

@@ -46,6 +46,6 @@ SHOW port;
 
 SELECT email, paswoord FROM people_greenlog WHERE email = 'viviane.callaert@telenet.be';
 
-
+SELECT * from people_greenlog
 
 
