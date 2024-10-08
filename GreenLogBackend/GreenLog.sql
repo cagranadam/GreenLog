@@ -44,5 +44,8 @@ SELECT datname FROM pg_database;
 SELECT * FROM pg_user;
 SHOW port;
 
+SELECT email, paswoord FROM people_greenlog WHERE email = 'viviane.callaert@telenet.be';
+
+
 
 
