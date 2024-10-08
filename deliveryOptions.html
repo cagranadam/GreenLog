@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Personal Information</title>
+  <!-- 
+  Essential stylesheets
+  =====================================-->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/bootstrap-slider.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <script>
+
+    // Function to retrieve email from URL and display it
+        function loadPersonalInformation() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const email = urlParams.get('email');
+            if (email) {
+                document.getElementById('emailDisplay').value = decodeURIComponent(email);
+            }
+        }
+
+    // JavaScript function to show the delivery options
+    function showDeliveryOptions(event) {
+      event.preventDefault(); // Prevent the form from submitting
+      document.getElementById("deliveryOptions").style.display = "block"; // Show the delivery options
+    }
+
+    // only one checkbox is selected
+    function singleCheck(checkbox) {
+      var checkboxes = document.querySelectorAll('.form-check-input');
+      checkboxes.forEach((item) => {
+        if (item !== checkbox) item.checked = false;
+      });
+    }
+
+    // JavaScript function to send the data to Google Sheets
+    function submitOrder(event) {
+      event.preventDefault(); // Prevent the form from submitting
+
+      // Get form data
+      const email = document.getElementById('email').value; // User's email
+      const deliveryAddress = document.getElementById('addressSelect').value; // Selected delivery address
+      const orderNumber = document.getElementById('orderForm').elements[2].value; // Order number (assuming it's 3rd element)
+      const expectedDelivery = document.getElementById('orderForm').elements[3].value; // Expected delivery date
+      const chosenOption = document.querySelector('input[name="option"]:checked').value; // Selected delivery option
+
+      // Create data object to send to Google Sheets
+      const formData = {
+        email: email,
+        deliveryAddress: deliveryAddress,
+        orderNumber: orderNumber,
+        expectedDelivery: expectedDelivery,
+        chosenOption: chosenOption
+      };
+
+      // Send data using fetch to the Google Apps Script URL
+      fetch('https://script.google.com/macros/s/AKfycbwhtJ9VWVZyPebhGzD-kj_kSelZRmuonvjmxMgwJDY/exec', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+      .then(response => response.text())
+      .then(data => {
+        alert('Order submitted successfully!');
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+    }
+
+  </script>
+
+
+</head>
+  
+<body onload="loadPersonalInformation()">
+    <header style="display: flex; justify-content: center; align-items: center;">
+        <img src="images/GreenlogLogo.png" alt="" height="100">
+    </header>
+
+
+
+<!--===========================================
+=              Options section                =
+============================================-->
+<section id="deliveryOptions" class="section bg-gray">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="heading text-center pb-5">
+          <h2 class="font-weight-bold">Delivery options</h2>
+        </div>
+      </div>
+ 
+      <div class="col-lg-9 col-md-8">
+          <div style="display: flex; align-items: center; margin-bottom: 10px;">
+              <h4 style="margin-right: 30px; line-height: 1.5; margin: 10px;">Order number</h4>
+              <select class="form-control" style="width: 150px; height: auto;">
+                  <option>Order1</option>
+                  <option>Order2</option>
+                  <option>Order3</option>
+              </select>
+          </div>
+      </div>
+
+
+      <!-- Option 1 -->
+      <div class="col-lg-4 col-md-6 col-12">
+        <div class="package-content bg-light border text-center p-5 my-2 my-lg-0">
+          <div class="package-content-heading border-bottom">
+            <img src="images/truck.png" alt="Custom Icon" style="height: 60px;">
+            <h2>Receive as soon as possible</h2>
+            <p style="height: 20px;"></p>
+          </div>
+          <ul>
+            <li class="my-4"> <i class="fa fa-check"></i> Price xxx</li>
+          </ul>
+          <div class="form-check">
+	          <label class="form-check-label">
+	            <input class="form-check-input" type="checkbox" value="option1" onclick="singleCheck(this)">Select
+	          </label>
+	        </div>
+        </div>
+      </div>
+      <!-- Option 2 -->
+      <div class="col-lg-4 col-md-6 col-12">
+        <div class="package-content bg-light border text-center my-2 my-lg-0 p-5">
+          <div class="package-content-heading border-bottom">
+            <img src="images/neighbor.png" alt="Custom Icon" style="height: 60px;">
+            <h2>Together with neighbors</h2>
+            <p>possible date</p>
+          </div>
+          <ul>
+            <li class="my-4"> <i class="fa fa-check"></i> Price xxx</li>
+          </ul>
+          <div class="form-check">
+	          <label class="form-check-label">
+	            <input class="form-check-input" type="checkbox" value="option2" onclick="singleCheck(this)">Select
+	          </label>
+	        </div>
+        </div>
+      </div>
+      <!-- Option 3 -->
+      <div class="col-lg-4 col-md-6 mx-sm-auto col-12">
+        <div class="package-content bg-light border text-center p-5 my-2 my-lg-0">
+          <div class="package-content-heading border-bottom">
+            <img src="images/parcel.png" alt="Custom Icon" style="height: 60px;">
+            <h2>Free no-rush shipping</h2>
+            <p>Get it next Wednesday</p>
+          </div>
+          <ul>
+            <li class="my-4"> <i class="fa fa-check"></i> Price xxx</li>
+          </ul>
+          <div class="form-check">
+	          <label class="form-check-label">
+	            <input class="form-check-input" type="checkbox" value="option3" onclick="singleCheck(this)">Select
+	          </label>
+	        </div>
+        </div>
+      </div>
+       <!-- Submit -->
+      <div class="col-12 d-flex justify-content-center mt-5">
+        <button type="submit" class="btn btn-success" style="width: 200px;" onclick="submitOrder(event)">Submit</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Footer-->
+<footer class="footer-bottom">
+  <!-- Container Start -->
+  <div class="container">
+    <div class="row">
+      <p>Designed & Developed by xxxx</p>
+    </div>
+  </div>
+  <!-- Container End -->
+</footer>
+
+</body>
+
+</html>
