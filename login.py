@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, redirect, url_for, session
 import psycopg2
 import bcrypt
 
+#Running on http://127.0.0.1:5000
+
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Update this with a secure secret key
 
@@ -32,7 +34,7 @@ def login():
         cursor = connection.cursor()
 
         # Check if the user exists
-        cursor.execute("SELECT paswoord FROM people_greenlog WHERE e_mail = %s", (email,))
+        cursor.execute("SELECT paswoord FROM people_greenlog WHERE email = %s", (email,))
         user = cursor.fetchone()
 
         if user and bcrypt.checkpw(password, user[0].encode('utf-8')):  # Check hashed password
