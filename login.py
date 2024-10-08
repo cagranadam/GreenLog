@@ -1,21 +1,36 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import psycopg2
 import bcrypt
+import os
+from urllib.parse import urlparse
 
 #Running on http://127.0.0.1:5000
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Update this with a secure secret key
 
-# PostgreSQL connection details
 def get_db_connection():
-    return psycopg2.connect(
-        dbname="GreenLog",
-        user="postgres",
-        password="XzyxOCph4c",  # Use the correct database password
-        host="localhost",
-        port="5432"
-    )
+    # Check if DATABASE_URL is set (used in production)
+    database_url = os.environ.get("DATABASE_URL")
+    
+    if database_url:
+        result = urlparse(database_url)
+        return psycopg2.connect(
+            dbname=result.path[1:],  # Remove leading '/' to get the database name
+            user=result.username,
+            password=result.password,
+            host=result.hostname,
+            port=result.port
+        )
+    else:
+        # Fallback to local development database
+        return psycopg2.connect(
+            dbname="GreenLog",
+            user="postgres",
+            password="XzyxOCph4c",  # Replace with your local PostgreSQL password
+            host="localhost",
+            port="5432"
+        )
 
 # Login route to render login form
 @app.route('/')
