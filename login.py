@@ -11,7 +11,7 @@ app.secret_key = 'your_secret_key'  # Update this with a secure secret key
 
 def get_db_connection():
     # Check if DATABASE_URL is set (used in production)
-    database_url = os.environ.get("DATABASE_URL")
+    database_url = os.environ.get("postgres://u84dqaci1j7g53:p5c8b92db5ffb0b519f9ea9f1c5e4caaa0aa5263f10fe45dba24d16d1de9c14b7@cfls9h51f4i86c.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com:5432/dbn6bk22lafkc2")
     
     if database_url:
         result = urlparse(database_url)
@@ -27,10 +27,15 @@ def get_db_connection():
         return psycopg2.connect(
             dbname="GreenLog",
             user="postgres",
-            password="XzyxOCph4c",  # Replace with your local PostgreSQL password
+            password="XzyxOCph4c", 
             host="localhost",
             port="5432"
         )
+
+#Databselink in GoogleDrive
+#https://drive.google.com/file/d/1JjLec4J6ynPwOWKlILK-CAHR7mqehtnJ/view?usp=sharing
+#Dowload link: https://drive.google.com/uc?export=download&id=1JjLec4J6ynPwOWKlILK-CAHR7mqehtnJ
+
 
 # pricing function
 #def getPrices(userID):
