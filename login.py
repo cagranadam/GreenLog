@@ -32,6 +32,20 @@ def get_db_connection():
             port="5432"
         )
 
+# pricing function
+#def getPrices(userID):
+#    prices = [price1,price2,price3]
+#    price1=8
+#    price2= getDynamicPrice(userID)
+#    price3= 4
+#    return prices
+
+#def getDynamicPrice(userID):
+#    #check neighbours
+#    #calcute costs with neighbour
+#    #turn into price for consumer
+#    return price
+
 # Login route to render login form
 @app.route('/')
 def index():
